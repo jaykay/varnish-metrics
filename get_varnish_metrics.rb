@@ -59,8 +59,7 @@ def formatted_output(metric, format)
     end
     puts builder.to_xml
   else
-    # TODO: Error handling
-    "Error"
+    STDERR.puts "ERROR: You did not provide a valid output format. Please use some of the following: text\n json\n json-pretty\n yaml\n xml\n \n For help run: $ ./get_varnish_metrics.rb help get_metrics"
   end
 end
 
@@ -120,7 +119,7 @@ class VarnishMetrics < Thor
       debug_output(options) if options[:debug]
       formatted_output(@metric, options[:output])
     rescue Net::SSH::ConnectionTimeout
-      puts "ERROR: Connection timed out. Did you provide the correct settings?"
+      STDERR.puts "ERROR: Connection timed out. Did you provide the correct settings?"
     end
   end
 
